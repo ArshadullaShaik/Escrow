@@ -82,7 +82,7 @@ This project implements a decentralized escrow service where funds are held in a
 1.  **Initialize**: The contract is deployed with the Buyer and Seller addresses defined.
 2.  **Deposit**: The Buyer calls `payndconfirm` to deposit the agreed amount.
 3.  **Ship**: The Seller sees the deposit and ships the item, calling `productsent`.
-4.  **Confirm**: The Buyer receives the item and calls `confirmreceipt`.
+4.  **Confirm**: The Buyer receives the item and calls `productreceived`.
 5.  **Withdraw**: The Seller can now release the funds to their wallet using `getpayment`.
 
 ## 📄 License
