@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escrow Deployer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.5/ethers.umd.min.js"></script>
+</head>
+
+<body>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="container">
+        <h1>Deploy Escrow</h1>
+
+        <div class="input-group">
+            <button id="connectBtn" class="btn-connect" onclick="connectWallet()">
+                ⚡ Connect Wallet
+            </button>
+        </div>
+
+        <div class="action-container" style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <!-- Deploy Section -->
+            <div id="deploySection" class="card-glass"
+                style="opacity: 0.5; pointer-events: none; transition: opacity 0.3s; flex: 1; min-width: 300px;">
+                <h3>New Contract</h3>
+                <div class="input-group">
+                    <label for="buyerAddress">Buyer Address</label>
+                    <input type="text" id="buyerAddress" placeholder="0x123..." />
+                </div>
+
+                <div class="input-group">
+                    <label for="payeeAddress">Payee Address</label>
+                    <input type="text" id="payeeAddress" placeholder="0x456..." />
+                </div>
+
+                <button id="deployBtn" class="btn-deploy" onclick="deployContract()">
+                    🚀 Deploy Contract
+                </button>
+            </div>
+
+            <!-- Load Section -->
+            <div id="loadSection" class="card-glass"
+                style="opacity: 0.5; pointer-events: none; transition: opacity 0.3s; flex: 1; min-width: 300px;">
+                <h3>Load Existing</h3>
+                <div class="input-group">
+                    <label for="contractAddressInput">Contract Address</label>
+                    <input type="text" id="contractAddressInput" placeholder="0x..." />
+                </div>
+                <button class="btn-small" onclick="loadContractFromInput()" style="width: 100%;">
+                    📂 Load Contract
+                </button>
+            </div>
+        </div>
+
+        <div id="interactionSection" style="display: none; opacity: 0; pointer-events: none; margin-top: 20px;">
+            <h3>Interact</h3>
+
+            <!-- Diagnostics Dashboard -->
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <div class="card-glass" style="flex: 1; padding: 15px; font-size: 0.9rem;">
+                    <div style="color: var(--text-muted); margin-bottom: 5px;">Your Role</div>
+                    <div id="userRole" style="font-weight: bold; color: var(--primary-color);">Detecting...</div>
+                </div>
+                <div class="card-glass" style="flex: 1; padding: 15px; font-size: 0.9rem;">
+                    <div style="color: var(--text-muted); margin-bottom: 5px;">Contract State</div>
+                    <div id="contractState" style="font-weight: bold; color: var(--secondary-color);">Loading...</div>
+                </div>
+            </div>
+
+            <div
+                style="text-align: center; margin-bottom: 20px; background: rgba(0, 0, 0, 0.2); padding: 10px; border-radius: 10px; border: 1px solid var(--glass-border);">
+                <span style="color: var(--text-muted); font-size: 0.9rem;">Contract Balance</span>
+                <div id="contractBalance"
+                    style="font-size: 1.5rem; font-weight: bold; color: var(--success-color); margin-top: 5px;">0.0 ETH
+                </div>
+            </div>
+
+            <div style="text-align: left; margin-bottom: 20px;">
+                <span class="role-badge badge-buyer">Buyer Actions</span>
+                <div class="input-group" style="margin-bottom: 5px;">
+                    <input type="number" id="paymentAmount" placeholder="Amount (ETH)" step="0.01" />
+                </div>
+                <button class="btn-buyer btn-small" onclick="payAndConfirm()">Pay & Confirm</button>
+                <button class="btn-buyer btn-small" onclick="productReceived()">Confirm Receipt</button>
+            </div>
+
+            <div style="text-align: left; margin-bottom: 20px;">
+                <span class="role-badge badge-seller">Seller Actions</span>
+                <div class="action-row">
+                    <button class="btn-seller btn-small" onclick="productSent()">Product Sent</button>
+                    <button class="btn-seller btn-small" onclick="getPayment()">Withdraw</button>
+                </div>
+            </div>
+
+            <div style="text-align: left;">
+                <span class="role-badge badge-admin">General</span>
+                <button class="btn-danger btn-small" onclick="refund()">Refund / Cancel</button>
+            </div>
+        </div>
+
+        <div class="status-box">
+            <div id="loader" class="loader"></div>
+            <div id="statusText">
+                <div class="status-label">STATUS</div>
+                <span id="statusMessage">Waiting for wallet connection...</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">Powered by Ethers.js & Glassmorphism</div>
+
+    <script src="app.js?v=3"></script>
+</body>
+
+</html>

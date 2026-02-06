@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+contract Escrow{
+address payable public payee;
+address payable public buyer;
+address payable public middleman;
+uint public amount;
+
+enum state{
+waitingpayment,paymentdone,productssent,trxproceed,cancel
+}
+state public State;
+constructor(address buyer,address payee){
+    address middleman = msg.sender;
+    address buyer = buyer;
+    address payee = payee;
+    State = state.waitingpayment;
+}event paymentdone(address buyer,address payee,uint amount);
+modifier onlybuyer(){
+    require(buyer==msg.sender,"Your not the buyer");
+    _;
+}
+modifier onlyseller(){
+    require(payee==msg.sender,"YOur not the seller");
+    _;}
+modifier middleguy(){
+    require(middleman==msg.sender,"You are a scammer");
+    _;
+}
+modifier instate(state _State){
+    require(State == _State);
+    _;
+}
+function confirmpayment() onlybuyer public instate(state.waitingpayment){
+    State = state.paymentdone;
+}}
